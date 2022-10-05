@@ -1,0 +1,68 @@
+:root {
+  --main-color: #ffffff;
+  --secondary-color: #000;
+  --tertiary-color: #4675b9;
+  --highlight-color: #fd611a;
+  --button-color: #fd611a;
+}
+
+/* -------------------- NAVBAR -------------------- */
+.navbar {
+  --bs-navbar-padding-y: 0rem;
+}
+
+.navbar .container-fluid {
+  --bs-gutter-x: 0rem;
+  background-color: var(--highlight-color);
+  padding-left: 1rem;
+}
+
+.navbar .container-fluid svg {
+  width: 1.5em;
+  height: 1.5em;
+  fill: white;
+}
+
+/* ~ */
+/* .navbar div > div {
+	background-color: red;
+} */
+
+.navbar-collapse {
+  background-color: #1a44fd;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.navbar-nav {
+  column-gap: 3rem;
+}
+
+.navbar-nav a {
+  color: white;
+  font-weight: bold;
+}
+
+/* -------------------- BUTTON -------------------- */
+.btn:hover {
+  /* --bs-btn-hover-color: var(--main-color); */
+  --bs-btn-hover-bg: var(--button-color);
+}
+
+.btn-primary {
+  --bs-btn-color: var(--main-color);
+  --bs-btn-bg: var(--button-color);
+  /* --bs-btn-bg: #fd611a; */
+  text-transform: uppercase;
+}
+
+/* -------------------- CARD -------------------- */
+.card-text {
+  color: var(--tertiary-color);
+  font-size: 1.6rem;
+}
+
+.card__img {
+  height: 142px;
+  object-fit: contain;
+}
