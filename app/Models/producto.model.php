@@ -1,17 +1,16 @@
 <?php
 class productoModel
 {
+    // privatizo los datos
     private $db;
 
-
+    // conecto la base de dato con el constructor 
     public function __construct()
     {
-
         $this->db = new PDO('mysql:host=localhost;' . 'dbname=ventatecnologica;charset=utf8', 'root', '');
     }
 
-
-    // ------------------Categoria---------------------------
+    // ---------------Base de dato de la tabla Categoria---------------------------
     public function getDbCategoria()
     {
         $query = $this->db->prepare('SELECT * FROM categoria');
@@ -21,7 +20,7 @@ class productoModel
     }
 
 
-    //------------------Inner Join de Producto y Categoria -----------------------
+    //-------------Base de dato (Inner Join de Producto y Categoria) -----------------------
     public function getDbProyCat()
     {
         $query = $this->db->prepare('SELECT  producto.id_producto, producto.precio , producto.nombre, producto.imagen , marca.marca_fk , categoria.categoria_fk FROM producto  INNER JOIN marca ON producto.marca_fk = marca.id INNER JOIN categoria ON producto.categoria_fk= categoria.id');
@@ -30,7 +29,7 @@ class productoModel
         return $innePyC;
     }
 
-
+    //---------------Base dato de la tabla Producto------------
     function getDbProduct($id)
     {
         $query = $this->db->prepare('SELECT * FROM producto WHERE categoria_fk = ? ');
@@ -39,6 +38,15 @@ class productoModel
         return $productos;
     }
 
+    /**
+     * Elimina una tarea dado su id.
+     */
+    function deleteProductoById($id)
+    {
+        $query = $this->db->prepare('DELETE FROM producto WHERE id = ?');
+        $query->execute([$id]);
+    }
+}
 
 
 
@@ -106,4 +114,3 @@ class productoModel
 
     //Para el buscador de google 
     //SELECT * FROM producto WHERE nombre LIKE 'G%';
-}

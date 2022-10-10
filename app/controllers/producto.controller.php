@@ -1,6 +1,6 @@
 <?php
-require_once './app/Models/model.php';
-require_once './app/Views/view.php';
+require_once './app/Models/producto.model.php';
+require_once './app/Views/producto.view.php';
 
 
 class productoController
@@ -14,18 +14,11 @@ class productoController
         $this->view = new productoView();
     }
 
-    public function showHome()
+    public function showProducto()
     {
         $homeP = $this->model->getDbProyCat();
-        $home = $this->model->getDbCategoria();
-        $this->view->showHome($home, $homeP);
+        $this->view->showProducto($homeP);
     }
-
-    // public function showCatalogo()
-    // {
-    //     $catalogo = $this->model->getDbProduct();
-    //     $this->view->showCatalogo($catalogo);
-    // }
 
     public function showOrders($id)
     {

@@ -2,8 +2,8 @@
   --main-color: #ffffff;
   --secondary-color: #000;
   --tertiary-color: #4675b9;
-  --highlight-color: #fd611a;
-  --button-color: #fd611a;
+  --highlight-color: #30e62098;
+  --button-color: #8cc703;
 }
 
 /* -------------------- NAVBAR -------------------- */
@@ -29,7 +29,7 @@
 } */
 
 .navbar-collapse {
-  background-color: #1a44fd;
+  background-color: #38af01bd;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }

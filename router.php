@@ -1,11 +1,14 @@
 <?php
 // van los require de los php
-require_once './app/controllers/controller.php';
+require_once './app/controllers/categoria.controller.php';
+require_once './app/controllers/producto.controller.php';
+require_once './app/controllers/auth.controller.php';
+
 
 define('BASE_URL', '//' . $_SERVER['SERVER_NAME'] . ':' . $_SERVER['SERVER_PORT'] . dirname($_SERVER['PHP_SELF']) . '/');
 
 // parametro
-$action = 'home';
+$action = 'inicio';
 if (!empty($_GET['action'])) {
     $action = $_GET['action'];
 }
@@ -13,18 +16,36 @@ if (!empty($_GET['action'])) {
 //parsear la accion
 $params = explode('/', $action);
 
-// Unico controlador
-$controllerCatalogo = new productoController();
 
 switch ($params[0]) {
-    case 'home':
-        $controllerCatalogo->showHome();
+    case 'login':
+        $authController = new AuthController();
+        $authController->showFormLogin();
         break;
+    case 'validate':
+        $authController = new AuthController();
+        $authController->validateUser();
+        break;
+
+    case 'logout':
+        $authController = new AuthController();
+        $authController->logout();
+        break;
+    case 'inicio':
+        $controllerProducto = new productoController();
+        $controllerProducto->showProducto();
+
+        $controllerCategoria = new categoriaController();
+        $controllerCategoria->showAsideCategoria();
+        break;
+
         // case 'catalogo':
         //     $controllerCatalogo->showCatalogo();
         //     break;
     case 'ordenamiento':
-        $controllerCatalogo->showOrders($params[1]);
+        $controllerProducto = new productoController();
+        $id = $params[1];
+        $controllerProducto->showOrders($id);
         break;
 
     default:
