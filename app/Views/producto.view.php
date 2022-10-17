@@ -11,25 +11,41 @@ class productoView
     }
 
     //-----------------home----------------
-    function showProducto($productos)
+    function showProducto($productos, $categorias)
     {
         // asigno variables al tpl smarty
         $this->smarty->assign('count', count($productos));
         $this->smarty->assign('productos', $productos);
+        $this->smarty->assign('categorias', $categorias);
 
         // mostrar el tpl
         $this->smarty->display('./Templates/home.tpl');
     }
     //---------------------------------------------------------------------
-
-
-    // ----------------catalogo--------------
-    function showOrders($catalogos)
+    // Vista al formulario para agregar valores nuevos
+    function showAgregar($categorias, $marcas)
     {
-        $this->smarty->assign('count', count($catalogos));
-        $this->smarty->assign('catalogos', $catalogos);
+        $this->smarty->assign('categorias', $categorias);
+        $this->smarty->assign('marcas', $marcas);
+        $this->smarty->display('./Templates/form.agregar.tpl');
+    }
 
-        $this->smarty->display('./Templates/productos.tpl');
+    // Vista al formulario para editar valores nuevos
+    function showEditar($productoID, $categorias, $marcas)
+    {
+        $this->smarty->assign('productos', $productoID);
+        $this->smarty->assign('categorias', $categorias);
+        $this->smarty->assign('marcas', $marcas);
+        $this->smarty->display('./Templates/editarform.tpl');
+    }
+
+    //Vista a descripciones en particular
+    function descripcionProd($productos, $categorias, $marcas)
+    {
+        $this->smarty->assign('productos', $productos);
+        $this->smarty->assign('categorias', $categorias);
+        $this->smarty->assign('marcas', $marcas);
+        $this->smarty->display('./Templates/descripcion.tpl');
     }
 }
 
@@ -41,14 +57,8 @@ class productoView
 
 
 
-//     //muestro array de marca
-//     $arrayBrand = getBrand();
-//     echo "<ul>";
-//     foreach ($arrayBrand as $value) {
-//         echo "<li><a href='catalogo.php'> $value->marca_fk</a></li>";
-//     }
-//     echo "</ul>";
-// }
+
+
 
 
 
@@ -61,22 +71,4 @@ class productoView
 //         }
 //         echo "</ul>";
 //     }
-// }
-
-    // Hecho con Smarty 🎇
-    // private $smarty;
-
-// public function __construct()
-// {
-//     $this->smarty = new Smarty(); // inicializo Smarty
-// }
-
-// function showProduct($productos)
-// {
-//     // asigno variables al tpl smarty
-//     $this->smarty->assign('count', count($productos));
-//     $this->smarty->assign('tasks', $productos);
-
-//     // mostrar el tpl
-//     $this->smarty->display('taskList.tpl');
 // }

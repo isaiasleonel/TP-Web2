@@ -11,6 +11,7 @@ class AuthController
     {
         $this->model = new UserModel();
         $this->view = new AuthView();
+        session_start();
     }
 
     public function showFormLogin()
@@ -32,11 +33,10 @@ class AuthController
 
             // inicio una session para este usuario
             session_start();
-            $_SESSION['USER_ID'] = $user->id;
+            $_SESSION['USER_ID'] = $user->id_user;
             $_SESSION['USER_EMAIL'] = $user->email;
             $_SESSION['IS_LOGGED'] = true;
-
-            header("Location: " . BASE_URL);
+            header("Location: " . BASE_URL . "inicio");
         } else {
             // si los datos son incorrectos muestro el form con un erro
             $this->view->showFormLogin("El usuario o la contraseña no existe.");

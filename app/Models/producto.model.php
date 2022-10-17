@@ -10,17 +10,9 @@ class productoModel
         $this->db = new PDO('mysql:host=localhost;' . 'dbname=ventatecnologica;charset=utf8', 'root', '');
     }
 
-    // ---------------Base de dato de la tabla Categoria---------------------------
-    public function getDbCategoria()
-    {
-        $query = $this->db->prepare('SELECT * FROM categoria');
-        $query->execute();
-        $categoria = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objeto
-        return $categoria;
-    }
 
 
-    //-------------Base de dato (Inner Join de Producto y Categoria) -----------------------
+    //-------------Base de dato (Inner Join de Producto , Categoria  Marca) -----------------------
     public function getDbProyCat()
     {
         $query = $this->db->prepare('SELECT  producto.id_producto, producto.precio , producto.nombre, producto.imagen , marca.marca_fk , categoria.categoria_fk FROM producto  INNER JOIN marca ON producto.marca_fk = marca.id INNER JOIN categoria ON producto.categoria_fk= categoria.id');
@@ -29,22 +21,63 @@ class productoModel
         return $innePyC;
     }
 
-    //---------------Base dato de la tabla Producto------------
+    //---------------Base dato de la tabla Producto / ordenar------------
     function getDbProduct($id)
     {
-        $query = $this->db->prepare('SELECT * FROM producto WHERE categoria_fk = ? ');
+        $query = $this->db->prepare('SELECT  producto.id_producto, producto.precio , producto.nombre, producto.categoria_fk, producto.imagen , marca.marca_fk , categoria.categoria_fk FROM producto  INNER JOIN marca ON producto.marca_fk = marca.id INNER JOIN categoria ON producto.categoria_fk= categoria.id WHERE producto.categoria_fk = ?');
         $query->execute([$id]);
         $productos = $query->fetchAll(PDO::FETCH_OBJ);
         return $productos;
     }
 
-    /**
-     * Elimina una tarea dado su id.
-     */
+
+    function getDbProdEditar($id)
+    {
+        $query = $this->db->prepare('SELECT  producto.id_producto, producto.precio , producto.nombre, producto.imagen , marca.marca_fk , categoria.categoria_fk FROM producto  INNER JOIN marca ON producto.marca_fk = marca.id INNER JOIN categoria ON producto.categoria_fk= categoria.id WHERE producto.id_producto = ?');
+        $query->execute([$id]);
+        $productos = $query->fetch(PDO::FETCH_OBJ);
+        return $productos;
+    }
+
+    function getDbProdDescripcion($id)
+    {
+        $query = $this->db->prepare('SELECT  producto.id_producto, producto.precio , producto.nombre, producto.imagen , marca.marca_fk , categoria.categoria_fk FROM producto  INNER JOIN marca ON producto.marca_fk = marca.id INNER JOIN categoria ON producto.categoria_fk= categoria.id WHERE producto.id_producto = ?');
+        $query->execute([$id]);
+        $productos = $query->fetchAll(PDO::FETCH_OBJ);
+        return $productos;
+    }
+
+
+    // Inserta los valores metido en el FORM a la base de dato producto
+    public function editarProductos($precio, $nombre, $categoria, $marca, $imagen, $id)
+    {
+        $pathImg = $this->uploadImage($imagen);
+        $query = $this->db->prepare("UPDATE `producto` SET `precio` =? , `nombre` = ?, `categoria_fk` = ?, `marca_fk` = ?, `imagen` = ? WHERE `producto`.`id_producto` = ?;");
+        $query->execute([$precio, $nombre, $categoria, $marca, $pathImg, $id]);
+    }
+
+    // Inserta los valores metido en el FORM a la base de dato producto
+    public function insertarProductos($precio, $nombre, $categoria, $marca, $imagen)
+    {
+        $pathImg = $this->uploadImage($imagen);
+        $query = $this->db->prepare("INSERT INTO producto (precio, nombre , categoria_fk , marca_fk , imagen) VALUES (?,?,?,?,?)");
+        $query->execute([$precio, $nombre, $categoria, $marca, $pathImg]);
+    }
+
+
+    // Elimina una tarea dado su id.
     function deleteProductoById($id)
     {
-        $query = $this->db->prepare('DELETE FROM producto WHERE id = ?');
+        $query = $this->db->prepare('DELETE FROM producto WHERE id_producto = ?');
         $query->execute([$id]);
+    }
+
+    // Agregar imagen
+    private function uploadImage($image)
+    {
+        $target = 'img/' . uniqid() . '.jpg';
+        move_uploaded_file($image, $target);
+        return $target;
     }
 }
 
@@ -71,45 +104,8 @@ class productoModel
     //     $productos = $sentencia->fetchAll(PDO::FETCH_OBJ);
     //     return $productos;
     // }
-    // function getCategory()
-    // {
-    //     $db = getLinkDB();
-    //     $sentencia = $db->prepare('SELECT * FROM categoria');
-    //     $sentencia->execute();
-    //     $categoria = $sentencia->fetchAll(PDO::FETCH_OBJ);
-    //     return $categoria;
-    // }
-    // function getBrand()
-    // {
-    //     $db = getLinkDB();
-    //     $sentencia = $db->prepare('SELECT * FROM marca');
-    //     $sentencia->execute();
-    //     $marcas = $sentencia->fetchAll(PDO::FETCH_OBJ);
-    //     return $marcas;
-    // }
 
 
-    // function getTable()
-    // {
-    //     $db = getLinkDB();
-    //     $sentencia = $db->prepare('SELECT producto.id_producto, producto.precio , producto.nombre, producto.imagen , marca.marca_fk , categoria.categoria_fk FROM producto  INNER JOIN marca ON producto.marca_fk = marca.id INNER JOIN categoria ON producto.categoria_fk= categoria.id;');
-    //     $sentencia->execute();
-    //     $tableInner = $sentencia->fetchAll(PDO::FETCH_OBJ);
-    //     return $tableInner;
-    // }
-
-    // function getFilterCategoria()
-    // {
-    //     $db = getLinkDB();
-    //     $sentencia = $db->prepare(' SELECT categoria.categoria_fk, producto.precio , producto.nombre, producto.imagen  FROM categoria  INNER JOIN producto ON categoria.id = producto.categoria_fk ');
-    //     $sentencia->execute();
-    //     $categoriaFilter = $sentencia->fetchAll(PDO::FETCH_OBJ);
-    //     return $categoriaFilter;
-    // }
-
-
-    // filtramos CAT U PRO =>  Placa de video
-    // SELECT categoria.categoria_fk, producto.precio , producto.nombre, producto.imagen  FROM categoria  INNER JOIN producto ON categoria.id = producto.categoria_fk  WHERE categoria.categoria_fk= "Placa de Video"
 
 
     //Para el buscador de google 

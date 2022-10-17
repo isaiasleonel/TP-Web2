@@ -11,13 +11,20 @@ class categoriaView
     }
 
 
-    function  showAsideCategoria($categorias)
+    function  formCategoria($categorias)
     {
-        // asigno variables al tpl smarty
-        $this->smarty->assign('count', count($categorias));
+
         $this->smarty->assign('categorias', $categorias);
 
-        // mostrar el tpl
-        $this->smarty->display('./Templates/aside-home.tpl');
+        $this->smarty->display('./Templates/addFormcategoria.tpl');
+    }
+
+
+    function  viewEditar($categoriaID, $select)
+    {
+
+        $this->smarty->assign('categoriaID', $categoriaID);
+        $this->smarty->assign('select', $select);
+        $this->smarty->display('./Templates/admHome.tpl');
     }
 }
