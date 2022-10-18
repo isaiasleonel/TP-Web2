@@ -36,14 +36,14 @@
               </svg>
             </a>
             <!-- Search Bar -->
-            {if isset($smarty.session.USER_ID)}
-              <a class="nav-link" href="logout">Logout ({$smarty.session.USER_EMAIL})</a>
-            {else}
-              <a class="nav-link" href="login">Login</a>
-            {/if}
             <form class="d-flex mt-4 mb-3 mt-lg-0 mb-lg-0 search" role="search">
               <input class="form-control me-2 search__field" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
+              {if isset($smarty.session.USER_ID)}
+                <a class="nav-link" href="logout">Logout ({$smarty.session.USER_EMAIL})</a>
+              {else}
+                <a class="nav-link" href="login">Login</a>
+              {/if}
             </form>
           </div>
         </div>

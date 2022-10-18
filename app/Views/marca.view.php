@@ -15,7 +15,7 @@ class marcaView
     {
         // asigno variables al tpl smarty
         $this->smarty->assign('marcas', $marcas);
-
+        $this->smarty->assign('count', count($marcas));
         // mostrar el tpl
         $this->smarty->display('./Templates/marca-sponsor.tpl');
     }

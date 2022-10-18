@@ -7,7 +7,7 @@ class AuthView
 
     public function __construct()
     {
-        $this->smarty = new Smarty(); // inicializo Smarty
+        $this->smarty = new Smarty();
     }
 
     function showFormLogin($error = null)

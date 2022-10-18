@@ -92,26 +92,5 @@
         <hr>
     </div>
 
-
-    <!--<div>                       Solo es tabla de categorias
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Categoria</th>
-
-                </tr>
-            </thead>
-            <tbody>
-                {foreach  from= $categorias item=categoria}
-                    <tr>
-                        <td>{$categoria->id}</td>
-                        <td>{$categoria->categoria_fk}</td>
-                        </td>
-                    </tr>
-                {/foreach}
-            </tbody>
-        </table>
-    </div>-->
     <!------------------ Fin de tabla de categorias ------------>
 </div>
